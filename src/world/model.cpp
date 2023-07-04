@@ -67,8 +67,9 @@ void model::allocate_buffers(const std::vector<tinyobj::shape_t>& shapes)
 		vertex_buffers.push_back(std::make_shared<cg::resource<
 		        cg::vertex>>(vertex_buffer_size));
 		index_buffers.push_back(std::make_shared<cg::resource<
-		        unsigned int>>(vertex_buffer_size));
+		        unsigned int>>(index_buffer_size));
 	}
+	textures.resize(shapes.size());
 }
 
 float3 cg::world::model::compute_normal(const tinyobj::attrib_t& attrib, const tinyobj::mesh_t& mesh, size_t index_offset)
@@ -99,7 +100,7 @@ void model::fill_vertex_data(cg::vertex& vertex, const tinyobj::attrib_t& attrib
 {
 	vertex.x = attrib.vertices[3 * idx.vertex_index];
 	vertex.y = attrib.vertices[3 * idx.vertex_index + 1]; 
-	vertex.y = attrib.vertices[3 * idx.vertex_index + 2];
+	vertex.z = attrib.vertices[3 * idx.vertex_index + 2];
 	
 	if (idx.normal_index < 0) 
 	{

@@ -113,7 +113,7 @@ namespace cg
 			out.r = static_cast<uint8_t>(preprocessed.x);
 			out.g = static_cast<uint8_t>(preprocessed.y);
 			out.b = static_cast<uint8_t>(preprocessed.z);
-
+			return out;
 		};
 		float3 to_float3() const
 		{

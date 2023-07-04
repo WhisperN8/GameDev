@@ -9,7 +9,9 @@ void cg::renderer::rasterization_renderer::init()
 	rasterizer->set_viewport(settings->width, settings->height);
 	render_target = std::make_shared<cg::resource<cg::unsigned_color>>(
 			settings->width, settings->height);
-	rasterizer->set_render_target(render_target);
+	depth_buffer = std::make_shared<cg::resource<float>>(
+			settings->width, settings->height);
+	rasterizer->set_render_target(render_target, depth_buffer);
 
 	model = std::make_shared<cg::world::model>();
 	model->load_obj(settings->model_path);
@@ -31,7 +33,7 @@ void cg::renderer::rasterization_renderer::init()
 void cg::renderer::rasterization_renderer::render()
 {
 	auto start = std::chrono::high_resolution_clock::now();
-	rasterizer->clear_render_target({255, 255, 255});
+	rasterizer->clear_render_target({0, 0, 0});
 
 	float4x4 matrix = mul(
 			camera->get_projection_matrix(),
